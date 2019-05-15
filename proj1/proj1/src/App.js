@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import styles from './App.module.css';
 import Person from "./Person/Person"
 
 class App extends Component {
@@ -66,6 +66,8 @@ class App extends Component {
 
         const displayState = this.state.display;
         let   toDisplay    = null;
+        let   pclasse      = [];
+        let   buttonback   = styles.backred;
 
         if (displayState) {
             
@@ -79,17 +81,31 @@ class App extends Component {
                         clicked = {(event) => this.deletePersonHandler(index)}
                     />
                 )
-            })
+            });
+
+            buttonback = styles.backgreen;
+
+        }
+
+        if (this.state.persons.length < 3) {
+
+            pclasse.push(styles.red);
+
+        }
+
+        if (this.state.persons.length < 2) {
+
+            pclasse.push(styles.bold);
 
         }
 
         return (
 
-            <div className="App">
+            <div className={styles.App}>
 
-                <p>This is really working</p>
+                <p className={pclasse.join(" ")}>This is really working</p>
 
-                <button onClick={this.displayHander}>Click</button>
+                <button className={buttonback} onClick={this.displayHander}>Click</button>
 
                 {toDisplay}
 
