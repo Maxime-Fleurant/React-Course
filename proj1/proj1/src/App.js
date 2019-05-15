@@ -8,15 +8,18 @@ class App extends Component {
         persons : [
             {
                 name: "max",
-                age : "29"
+                age : "29",
+                id  : "aaez12"
             },
             {
-                name : "celestia",
-                age : "21"
+                name: "celestia",
+                age : "21",
+                id  : "aaez123"
             },
             {
-                name : "infame",
-                age : "20"
+                name: "infame",
+                age : "20",
+                id  : "aaez124"
             }
         ],
         display : false
@@ -32,18 +35,31 @@ class App extends Component {
 
     }
 
-    inputHandler = (event, index) => {
+    inputHandler = (event, id) => {
 
-        let person      = {...this.state.persons[index]};
+        const personIndex = this.state.persons.findIndex(p => p.id === id);
+
+        let person      = {...this.state.persons[personIndex]};
             person.name = event.target.value;
 
         let persons = [...this.state.persons];
-        persons[index]  = person;
+        persons[personIndex]  = person;
 
         this.setState({
             persons : persons
         })
 
+    }
+
+    deletePersonHandler = (index) => {
+        
+        let persons = [...this.state.persons];
+        persons.splice(index, 1);
+
+        this.setState({
+            persons : persons
+        })
+        
     }
 
     render() {
@@ -53,27 +69,25 @@ class App extends Component {
 
         if (displayState) {
             
-            toDisplay = [...this.state.persons].map((el, index) => {
-
+            toDisplay = this.state.persons.map((el, index) => {
                 return (
-
                     <Person
                         name    = {el.name}
                         age     = {el.age}
-                        index   = {index}
-                        changed = {(event) => {this.inputHandler(event, index)}}
-                        key     = {el.name + el.age}
+                        changed = {(event) => {this.inputHandler(event, el.id)}}
+                        key     = {el.id}
+                        clicked = {(event) => this.deletePersonHandler(index)}
                     />
-
                 )
-
-            });
+            })
 
         }
 
         return (
 
             <div className="App">
+
+                <p>This is really working</p>
 
                 <button onClick={this.displayHander}>Click</button>
 
